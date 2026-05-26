@@ -116,8 +116,8 @@ a useful function here is the “base R” `sample()` function:
 sample(1:5,size=60, replace=TRUE)
 ```
 
-     [1] 2 1 1 1 3 2 1 2 4 4 4 2 3 1 2 5 3 1 4 4 4 2 1 2 1 4 2 4 1 1 3 2 5 3 5 4 1 1
-    [39] 5 1 1 1 4 2 1 4 4 5 5 3 5 2 4 5 4 4 2 1 2 4
+     [1] 4 2 3 2 5 4 1 4 4 1 1 4 3 1 4 5 5 5 5 2 4 4 1 1 3 2 3 3 4 1 2 2 3 3 2 5 1 2
+    [39] 4 3 2 3 1 1 3 5 3 2 3 5 4 1 2 4 2 1 3 1 5 4
 
 We can use this to make a random nucleotide sequwnce if we draw from
 “A”,“C”, “G”, and “T”…
@@ -126,7 +126,7 @@ We can use this to make a random nucleotide sequwnce if we draw from
 sample(x=c("A","C","G","T"), size=10, replace=TRUE)
 ```
 
-     [1] "G" "A" "G" "G" "T" "A" "T" "T" "C" "T"
+     [1] "T" "G" "G" "A" "T" "A" "G" "C" "T" "G"
 
 > **Q2.** Write a function generate_dna() that returns a random DNA
 > sequence of a length specified by the user. Your first version should
@@ -144,18 +144,18 @@ generate_dna <- function(len=10) {
 generate_dna()
 ```
 
-     [1] "G" "T" "T" "T" "T" "T" "T" "T" "C" "A"
+     [1] "G" "G" "G" "T" "C" "C" "G" "C" "G" "A"
 
 ``` r
 generate_dna(100)
 ```
 
-      [1] "C" "G" "C" "C" "T" "C" "A" "G" "T" "T" "T" "T" "T" "C" "C" "A" "G" "C"
-     [19] "C" "A" "G" "C" "A" "G" "G" "C" "G" "T" "C" "C" "T" "A" "T" "G" "T" "T"
-     [37] "C" "T" "A" "T" "G" "T" "A" "G" "G" "A" "C" "T" "A" "A" "G" "C" "C" "G"
-     [55] "A" "A" "T" "C" "T" "A" "C" "T" "A" "A" "A" "A" "C" "A" "C" "T" "A" "A"
-     [73] "C" "A" "A" "T" "C" "T" "C" "C" "G" "C" "A" "G" "T" "C" "C" "G" "A" "A"
-     [91] "T" "G" "A" "G" "A" "T" "A" "T" "T" "C"
+      [1] "A" "A" "G" "T" "C" "G" "G" "A" "A" "C" "G" "C" "C" "C" "T" "C" "T" "A"
+     [19] "T" "G" "A" "C" "T" "G" "G" "G" "T" "T" "C" "T" "T" "G" "C" "C" "A" "T"
+     [37] "T" "C" "T" "C" "A" "A" "C" "T" "T" "T" "T" "A" "A" "A" "T" "T" "T" "G"
+     [55] "A" "C" "G" "A" "A" "A" "A" "G" "C" "A" "G" "G" "T" "A" "G" "T" "G" "C"
+     [73] "G" "C" "A" "T" "T" "A" "G" "G" "C" "C" "C" "A" "T" "T" "G" "A" "A" "T"
+     [91] "C" "C" "C" "A" "A" "C" "G" "C" "T" "T"
 
 > **Q2b**:Your second version should *optionally* be able to return
 > either a multi-element vector of single character nucleotides (as
@@ -191,27 +191,27 @@ generate_dna(44)
 ```
 
     >len44
-    AAAATGCGGAGCTTATCATCGGACACAGACATCGTTACCAAAAG
+    TTTAGGCTTCATGACCTTTGCGGGTGAATGAATAACTAGGTATA
 
-    [1] "AAAATGCGGAGCTTATCATCGGACACAGACATCGTTACCAAAAG"
+    [1] "TTTAGGCTTCATGACCTTTGCGGGTGAATGAATAACTAGGTATA"
 
 ``` r
 generate_dna(single.element = TRUE)
 ```
 
     >len10
-    CACACTGAAA
+    ATGGTTAGAC
 
-    [1] "CACACTGAAA"
+    [1] "ATGGTTAGAC"
 
 ``` r
 generate_dna(single.element=FALSE)
 ```
 
     >len10
-    A T C C G C T C T G
+    A C A A G C A A C T
 
-     [1] "A" "T" "C" "C" "G" "C" "T" "C" "T" "G"
+     [1] "A" "C" "A" "A" "G" "C" "A" "A" "C" "T"
 
 ``` r
 paste(c("A","C","G"),collapse="---")
@@ -238,9 +238,9 @@ generate_dna()
 ```
 
     >len10
-    CAGAACCAGT
+    TAAGAACAAG
 
-    [1] "CAGAACCAGT"
+    [1] "TAAGAACAAG"
 
 ## Write a `generate protien()` function
 
@@ -260,7 +260,7 @@ generate_protien<-function(len=9){
 generate_protien(6)
 ```
 
-    [1] "MNWATR"
+    [1] "CVAYKR"
 
 ## Write a \`Generate random protien sequences of length 6 to 13
 
@@ -278,45 +278,45 @@ for(l in 6:13){
 ```
 
     >6
-    EFKGSH 
+    KYGASK 
     >7
-    MGPRGTI 
+    TRKANAW 
     >8
-    GIAWCRWK 
+    FQRNHENH 
     >9
-    LEVDEGMWP 
+    NKHGTGKQW 
     >10
-    KIRCGFGIVI 
+    NYMKSYKPYT 
     >11
-    DEYWENLNTAS 
+    WGPMPCKGDKI 
     >12
-    QLPIQNAVPETH 
+    ENAKHQQDFGKM 
     >13
-    DFLDKAFDTLKMH 
+    KRAVTTVKPGLCC 
 
 ``` r
 generate_protien(6)
 ```
 
-    [1] "VVSAWR"
+    [1] "KKTHII"
 
 ``` r
 generate_protien(7)
 ```
 
-    [1] "QSVWDYF"
+    [1] "CAANTAK"
 
 ``` r
 generate_protien(8)
 ```
 
-    [1] "SALWWNCT"
+    [1] "WTMNPSEP"
 
 ``` r
 generate_protien(9)
 ```
 
-    [1] "RAQGTNAKS"
+    [1] "AMHMKRKLF"
 
 ## Are Our peptides
 
