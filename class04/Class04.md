@@ -12,4 +12,4 @@ x<-1:50
 plot(x, sin(x), type="l",col="purple", lwd=3)
 ```
 
-![](Class04_files/figure-commonmark/unnamed-chunk-1-1.png)
+![](class04_files/figure-commonmark/unnamed-chunk-1-1.png)
