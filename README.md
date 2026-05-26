@@ -12,4 +12,9 @@ Class 6: [Why, when and how of writing your own R functions](class06/class06)
 
 Class 7: [Introduction to machine learning for Bioinformatics 1](class07/class07)
 
+Class 8: [Unsupervised learning mini-project](class08/class08)
+
+Class 9: [Project: Candy mini-project](class09/class09)
+
+Class 10: [Structural Bioinformatics (pt1)](class10/class10)
 
