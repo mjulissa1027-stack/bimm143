@@ -1,0 +1,195 @@
+---
+title: "Class05: Data Viz with ggplot2"
+author: "Julissa Gonzalez (PID:A18495188)"
+format: pdf
+toc: true
+---
+
+## Background
+
+There are many graphic systems in R for making plots and figures
+These include so-called *"base R" graphics* like the `plot()` function and on packages like**ggplot2**.
+
+Let's compare how we make a simple figure with these two systems:
+
+We can use the in-built `cars` dataset:
+
+```{r}
+head(cars)
+```
+```{r}
+plot(cars)
+```
+Before I can use ggplot I need to install it on my computer.
+To do this we can use the function `install.packages("ggplot2")`
+>**N.B** We never run `instal.packages()` in our quarto doc we run it once only in our R console as it would re-install the package every time we render out quarto report
+once installed we need to load up the package into our R brain:
+
+```{r}
+library(ggplot2)
+
+```
+
+The main function in the **ggplot2** package is called `ggplot()
+```{r}
+ggplot(cars)
+```
+
+
+
+Every ggplot has at least 3 layers:
+the **data** (a data.frame of the stuff we want to plot)
+the **aes** thetics(how the data maps to the plot),
+the **geom** layer (how you want the plot drawn, e.g. points, lines, etc.)
+```{r}
+ggplot(cars)+
+  aes(x=speed, y=dist)+
+  geom_point()
+```
+## Add some custom features
+Lets add a trend line that shows the relationship between speed and distance.
+
+```{r}
+ggplot(cars)+
+  aes(x=speed, y=dist)+
+  geom_point() +
+  geom_line()
+
+  
+```
+```{r}
+ggplot(cars)+
+  aes(x=speed, y=dist)+
+  geom_point() +
+  geom_smooth()+
+  theme_bw()+
+  labs(titles="Stoping Dist of old cars",
+       x="Speed (MPH)",
+       y= " Distance (ft)")
+```
+Q. Can you make the `geom_smooth()`function produce a linear
+```{r}
+ggplot(cars)+
+  aes(x=speed, y=dist)+
+  geom_point() +
+  labs(titles="Stoping Dist of old cars",
+       x="Speed (MPH)",
+       y= " Distance (ft)")+
+   geom_smooth(method="lm", se=FALSE)+
+  theme_bw()
+```
+## Gene expression Figure
+```{r}
+url <- "https://bioboot.github.io/bimm143_S20/class-material/up_down_expression.txt"
+genes <- read.delim(url)
+head(genes)
+```
+first plot attempt
+```{r}
+ggplot(genes)+
+  aes(x=Condition1, y=Condition2, col=State)+
+  geom_point()
+```
+
+```{r}
+ggplot(genes)+
+  aes(x=Condition1, y=Condition2, col=State)+
+  geom_point()+
+  scale_colour_manual(values=c("purple","grey","orange"))+  labs(x="No Drug ",
+      y="Drug ",
+      title="Gene Expresion upon GLP-1 inhibitor treatment")
+
+
+```
+## Expression Chnages
+```{r}
+
+#File location 
+url <- "https://raw.githubusercontent.com/jennybc/gapminder/master/inst/extdata/gapminder.tsv"
+
+gapminder <- read.delim(url)
+head(gapminder)
+```
+
+> Q. How many entries (i.e.rows) are in this dataset?
+
+```{r}
+nrow(gapminder)
+
+```
+
+> Q. How many "country" are in this dataset?
+
+```{r}
+length(table(gapminder$country))
+
+```
+
+```{r}
+length(unique(gapminder$country))
+```
+let's make our fist plot of the entire dataset:
+
+plot of "gdpPercap" vs. "lifeExp" colored by "continent"
+
+```{r}
+p<- ggplot(gapminder)+
+  aes(gdpPercap,lifeExp,col=continent )+
+  geom_point(alpha=0.3)
+p
+```
+I can add more layers to 'p'
+
+```{r}
+p+
+  facet_wrap(~continent)
+
+```
+Make a plot for 1977 and 2007
+```{r}
+url <- "https://raw.githubusercontent.com/jennybc/gapminder/master/inst/extdata/gapminder.tsv"
+
+gapminder <- read.delim(url)
+```
+
+```{r}
+library(dplyr)
+gapminder_both<-gapminder%>% filter(year==1977|year==2007)
+
+gapminder_2007<-gapminder%>% filter(year==2007)
+
+```
+```{r}
+ggplot(gapminder_2007)+
+  aes(gdpPercap,lifeExp)+
+  geom_point()
+```
+
+
+```{r}
+ggplot(gapminder_both)+
+  geom_point(aes(x=gdpPercap, y=lifeExp, col=continent, size=pop),alpha=0.7)+
+  facet_wrap(~year)
+```
+```{r}
+ggplot(gapminder)+
+  aes(lifeExp,col=continent)+
+  geom_histogram()
+  
+
+```
+
+```{r}
+ggplot(gapminder)+
+  aes(lifeExp,fill=continent)+
+  geom_histogram()
+```
+
+Q. Make a histogram of lifeExp facted by continent 
+
+```{r}
+ggplot(gapminder)+
+  aes(lifeExp)+
+  geom_histogram()+
+  facet_wrap(~continent)
+```

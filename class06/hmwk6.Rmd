@@ -1,0 +1,47 @@
+---
+title: "HW6"
+author: "Julissa Gonzalez"
+date: "2026-04-18"
+output: pdf_document
+---
+
+
+## Q6
+### Inputs
+- `pdb_id`: PDB ID or file name
+- `chain`: chain to analyze (default = `"A"`)
+- `elety`: atom type to analyze (default = `"CA"`)
+
+### What the function does and how to use it
+This function reads in protein PDB data, trims it to the specified chain and atom type, extracts the B-factors, and outputs a plot for the specified protein.  
+Use it by calling `plot_bfactor("4AKE")` or another PDB ID.
+
+
+### Output
+The function outputs a B-factor plot for the specified protein and returns a numeric vector of B-factor values.
+
+```{r}
+library(bio3d)
+
+plot_bfactor <- function(pdb_id, chain = "A", elety = "CA") {
+  pdb <- read.pdb(pdb_id)
+  pdb_trim <- trim.pdb(pdb, chain = chain, elety = elety)
+  bvals <- pdb_trim$atom$b
+  plotb3(bvals, sse = pdb_trim, typ = "l", ylab = "Bfactor")
+  return(bvals)
+}
+
+plot_bfactor("4AKE")
+```
+
+### Example output
+
+```{r}
+s1.b <- plot_bfactor("4AKE")
+s2.b <- plot_bfactor("1AKE")
+s3.b <- plot_bfactor("1E4Y")
+```
+
+
+
+

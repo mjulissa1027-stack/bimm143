@@ -1,0 +1,364 @@
+---
+title: "Class 7: Machine Learning 1"
+author: "Julissa Gonzalez(A18495188)"
+format: pdf
+toc: true 
+---
+## Background
+ Today we will explore some core machine learning methods that are very popular in bioinformatics. These include **clustering** and **dimensionality reduction**.
+ 
+## K-means clustering
+
+The main function in "base R for K-means clustering is called `kmeans()`
+
+Before we go too deep, lets make up some "simple" data that we can cluster and know if we are getting a good answer or not. To do this we use the `rnorm()`
+
+
+```{r}
+hist(rnorm(1000,mean=3))
+```
+
+```{r}
+rnorm(30,-3)
+rnorm(30,+3)
+```
+
+```{r}
+x<-c(rnorm(30,-3), rnorm(30,+3))
+```
+
+```{r}
+z<-cbind(x=x,y=rev(x))
+z
+plot(z)
+```
+
+```{r}
+p<-1:5
+
+cbind(p,p)
+
+rbind(p,p)
+
+rev(p)
+```
+Now we can run`kmeans()` on this input `z` and see what the results look like.
+
+```{r}
+km<- kmeans(z, centers=2)
+km
+```
+
+```{r}
+attributes(km)
+```
+>Q. How many points are in each cluster?
+
+```{r}
+km$size
+```
+
+>Q. What "components of your result object details cluster assignment/membership?
+
+```{r}
+ km$cluster
+```
+
+>Q. What "components of your result object details cluster center
+
+```{r}
+km$centers
+```
+
+>Q. Plot `z` colored by the kmeans cluster assignment and add cluster centers as blue points
+
+```{r}
+plot(z, col=c("red","blue"))
+```
+
+```{r}
+plot(z, col=2)
+```
+
+```{r}
+plot(z, col=c(1,2))
+```
+
+
+```{r}
+plot(z, col=km$cluster)
+points (km$centers, col="blue", pch=15)
+```
+
+>Q. Run a K-means clustering and ploit the results asking for 4 clusters (K=4)
+
+```{r}
+km4<- kmeans(z,centers=4)
+plot(z, col=km4$cluster)
+points(km4$centers, col="blue",pch=15,cex=2 )
+```
+> **N.B**. You need to tell K-means the number of clusters(i.e. set `center=2`)!!
+
+one approach is to try different valurs for `centers` and then pick the best...
+```{r}
+ans<- NULL
+for(i in 1:10){
+km<- kmeans(z, centers=i)
+ans<-c(ans,km$tot.withinss)
+}
+plot(ans,type="o",
+     xlab="Number of clusters",
+    ylab="Total Sum of squares Distance")
+```
+
+## Heirarchial Clustering 
+
+The main function in "base: R Heirachial Clusrering is called `hclust()`
+
+This function does not take your "raw" data for clustering. You must first build a "distance matrix" from your data and pass this as input to `hclust()`
+
+```{r}
+d<-dist(z)
+hc<-hclust(d)
+hc
+```
+There is a bespoke `plot()` method for `hclust()` result objects.
+
+```{r}
+plot(hc)
+abline(h=8, col="red")
+```
+
+Once we have our `hclust` object( our "tree" of "cluster dendrogram") we can *"cut"* the tree to reval the clustering pattern
+
+```{r}
+cutree(hc, h=8)
+```
+```{r}
+cutree(hc, k=4)
+```
+
+> Q.Make a plot of `z` with your hclust results(i.e. colored by cluster membership)
+
+```{r}
+grps<- cutree(hc, k=2)
+plot(z, col=grps)
+```
+
+## Hands on with PCA 
+Principal Component Analysis(PCA)
+PCA is a dimensionality reduction method that is popular for revaling patterns in complex data sets
+
+
+
+### Analysis of UK food data
+
+Lest look at some data on eating habits of folks from the UK to see if there are patterns and trends that have some regions being distinct from others. 
+
+## Data Import
+ The data is made available in CSV format so we can use the `read.csv()`
+ 
+```{r}
+url<- "https://tinyurl.com/UK-foods"
+x <- read.csv(url)
+dim(x)
+head(x)
+```
+> Q. How many rows and columns are in your new data frame named x? What R functions could you use to answer this questions?
+
+```{r}
+dim(x) 
+```
+```{r}
+x <- read.csv(url, row.names=1)
+head(x)
+```
+> Q2. Which approach to solving the ‘row-names problem’ mentioned above do you prefer and why? Is one approach more robust than another under certain circumstances?
+
+I prefer using read.csv (url, row.names = 1) because it tells R that the first column should be used as row names. It's cleaner and less error prone than importing the column first and then manually removing it.
+
+```{r}
+# Note how the minus indexing works
+rownames(x) <- x[,1]
+x <- x[,-1]
+head(x)
+```
+```{r}
+x <- read.csv(url, row.names=1)
+head(x)
+```
+
+```{r}
+barplot(as.matrix(x), beside=T, col=rainbow(nrow(x)))
+```
+
+
+
+```{r}
+barplot(as.matrix(x), beside=F, col=rainbow(nrow(x)))
+```
+Changing beside = TRUE to beside = FALSE makes the stacked barplot.
+
+```{r}
+dim(x)
+head(x)
+
+```
+
+## Tidy the data
+Fix anything that went wrong with data import. 
+
+```{r}
+library(tidyr)
+
+# Convert data to long format for ggplot with `pivot_longer()`
+x_long <- x |> 
+          tibble::rownames_to_column("Food") |> 
+          pivot_longer(cols = -Food, 
+                       names_to = "Country", 
+                       values_to = "Consumption")
+
+dim(x_long)
+```
+```{r}
+head(x_long)
+
+```
+# Create grouped bar plot
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(x_long) +
+  aes(x = Country, y = Consumption, fill = Food) +
+  geom_col() +
+  theme_bw()
+```
+
+```{r}
+ggplot(x_long) +
+  aes(x = Country, y = Consumption, fill = Food) +
+  geom_col(position = "dodge") +
+  theme_bw()
+```
+```{r}
+ggplot(x_long) +
+  aes(x = Country, y = Consumption, fill = Food) +
+  geom_col(position = "stack") +
+  theme_bw()
+```
+Changing geom_col(position = "dodge") to geom_col(position = "stack"), or just geom_col(), makes the stacked barplot.
+
+>. Q5: We can use the pairs() function to generate all pairwise plots for our countries. Can you make sense of the following code and resulting figure? What does it mean if a given point lies on the diagonal for a given plot?
+
+A point on the diagonal means that the two countries have similar consumption values for that food category. The pairs plot compares each country against every other country to show similarities and differences in food consumption patterns.
+
+```{r}
+pairs(x, col=rainbow(nrow(x)), pch=16)
+```
+```{r}
+ library(pheatmap)
+
+pheatmap( as.matrix(x) )
+```
+
+## Exporatory analysis
+Make some plots to help make sense of obvious trends...
+
+
+> Q6. Based on the pairs and heatmap figures, which countries cluster together and what does this suggest about their food consumption patterns? Can you easily tell what the main differences between N. Ireland and the other countries of the UK in terms of this data-set?
+
+England, Wales, and Scotland cluster more together, meaning they have more similar food consumption patterns. Northern Ireland looks more different from the others, but it is hard to tell exactly which foods drive the difference from only the pairs plot and heatmap.
+
+
+##PCA 
+
+```{r}
+pca <- prcomp( t(x) )
+summary(pca)
+```
+The returned `pca` object has components that we can use to make our result figures:
+
+```{r}
+attributes(pca)
+```
+the main result figure from this analysis is called a "PC score plot" or " orientation ploy" "PC plot" or "PC1 vs PC2 plot".
+
+```{r}
+library(ggplot2)
+
+ggplot(pca$x)+
+  aes(PC1, PC2)+
+  geom_point()
+```
+
+
+```{r}
+mycols<-c("orange","red","blue","darkgreen")
+ggplot(pca$x)+
+  aes(PC1, PC2)+
+  geom_point(col=mycols)
+
+```
+
+```{r}
+
+ggplot(pca$x)+
+  aes(PC1, PC2,label=row.names(pca$x))+
+  geom_point(col=mycols)+
+  geom_text(size=2, vjust=2, col=mycols)
+
+```
+
+```{r}
+
+ggplot(pca$rotation)+
+  aes(x= PC1,
+      y= reorder(row.names(pca$rotation),PC1))+
+  geom_col()
+
+```
+```{r}
+ggplot(pca$rotation) +
+  aes(x = PC1, y = reorder(rownames(pca$rotation), PC1)) +
+  geom_col() +
+  xlab("PC1 Loading Score") +
+  ylab("") +
+  theme_bw()
+```
+```{r}
+ggplot(pca$rotation) +
+  aes(x = PC2, y = reorder(rownames(pca$rotation), PC2)) +
+  geom_col() +
+  xlab("PC2 Loading Score") +
+  ylab("") +
+  theme_bw()
+```
+PC2 mainly separates the countries based on the foods with the largest positive and negative loading scores. The most important foods are the ones with the longest bars on the PC2 loading plot.
+
+```{r}
+url2 <- "https://tinyurl.com/expression-CSV"
+rna.data <- read.csv(url2, row.names = 1)
+
+dim(rna.data)
+```
+```{r}
+pca <- prcomp(t(rna.data), scale = TRUE)
+
+df <- as.data.frame(pca$x)
+df$Sample <- rownames(df)
+
+ggplot(df) +
+  aes(x = PC1, y = PC2, label = Sample) +
+  geom_point(size = 3) +
+  geom_text(vjust = -0.5, size = 3) +
+  xlab("PC1") +
+  ylab("PC2") +
+  theme_bw()
+
+summary(pca)
+```
+There are 100 genes and 10 samples. PC1 gives a useful overview because it explains 92.6% of the variation, and PC1 plus PC2 explain 94.9% total.
+
