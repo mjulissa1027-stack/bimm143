@@ -9,17 +9,17 @@ body {
   font-family: "Trebuchet MS", Arial, sans-serif;
 }
 
-header {
-  background-image: url("https://www.genobiomics.com/wp-content/uploads/2019/04/banner.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.page-header {
+  background-image: url("../banner.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
   text-align: center;
-  padding: 80px 20px;
-  border-bottom: 4px solid hotpink;
+  padding: 80px 20px !important;
+  border-bottom: 4px solid hotpink !important;
 }
 
-header h1 {
+.page-header h1 {
   color: white;
   font-size: 60px;
   text-shadow:
@@ -31,15 +31,15 @@ header h1 {
   padding: 12px 24px;
   border-radius: 20px;
 }
-header h1:before {
+.page-header h1:before
   content: "🎀🧬 ";
 }
 
-header h1:after {
+.page-header h1:after
   content: " 🔬🎀";
 }
 
-header p {
+.page-header p
   color: #fff0f7;
   font-size: 20px;
 }
