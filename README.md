@@ -12,28 +12,28 @@ Class 6: [Why, when and how of writing your own R functions](class06/class06rfun
 
 Class 7: [Introduction to machine learning for Bioinformatics 1](class07/Class07.md)
 
-8: Unsupervised Learning Mini-Project
+Class 8: [Unsupervised Learning Mini-Project](class04/Class04.md)
 
-9: Candy Mini-Project
+Class 9: [Candy Mini-Project](class04/Class04.md)
 
-10: Structural Bioinformatics (pt1)
+Class 10: [Structural Bioinformatics (pt1)
 
-11: Structural Bioinformatics (pt2. Focus on new AlphaFold2)
+Class 11: [Structural Bioinformatics (pt2. Focus on new AlphaFold2)](class04/Class04.md)
 
-12: Genome informatics (online class)
+Class 12: [Genome informatics (online class)](class04/Class04.md)
 
-13: Transcriptomics and the analysis of RNA-Seq data
+Class 13: [Transcriptomics and the analysis of RNA-Seq data](class04/Class04.md)
 
-14: RNA-Seq analysis mini-project
+Class 14: [RNA-Seq analysis mini-project](class04/Class04.md)
 
-15: Hands-on with Git and GitHub
+Class 15: [Hands-on with Git and GitHub](class04/Class04.md)
 
-16: Essential UNIX for bioinformatics
+Class 16: [Essential UNIX for bioinformatics](class04/Class04.md)
 
-17: Analyzing sequencing data in the cloud
+Class 17: [Analyzing sequencing data in the cloud](class04/Class04.md)
 
-18: Mini Project: Investigating Pertussis Resurgence
+Class 18: [Mini Project: Investigating Pertussis Resurgence](class04/Class04.md)
 
-19: Mini Project: Cancer Mutation Analysis
+Class 19: [Mini Project: Cancer Mutation Analysis](class04/Class04.md)
 
-20: GitHub pages, online portfolio completion, GitHub copilot plus bonus Bioinformatics in industry session
+Class 20: [GitHub pages, online portfolio completion, GitHub copilot plus bonus Bioinformatics in industry session](class04/Class04.md)
