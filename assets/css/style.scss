@@ -1,0 +1,69 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+body {
+  background: linear-gradient(135deg, #ffe6f2, #fff7fb);
+  color: #5c3b4e;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+header {
+  background: linear-gradient(90deg, #ffb6d9, #ff69b4);
+  border-bottom: 3px solid #ff4fa3;
+  text-align: center;
+}
+
+header h1 {
+  color: #ffffff;
+  text-shadow: 0 0 10px #ff2f92;
+  font-size: 48px;
+}
+
+header h1:before {
+  content: "🧬 ";
+}
+
+header h1:after {
+  content: " 🔬";
+}
+
+header p {
+  color: #fff0f7;
+  font-size: 20px;
+}
+
+#main_content {
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid #ffb6d9;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 0 25px #ffcce5;
+}
+
+a {
+  color: #ff1493;
+}
+
+a:hover {
+  color: #d63384;
+  text-shadow: 0 0 8px #ff8ac8;
+}
+
+h1, h2, h3 {
+  color: #d63384;
+  text-shadow: 0 0 6px #ffcce5;
+}
+
+img {
+  border-radius: 18px;
+  border: 3px solid #ffb6d9;
+  box-shadow: 0 0 20px #ffcce5;
+}
+
+code, pre {
+  background: #ffe6f2;
+  color: #c2185b;
+  border: 1px solid #ff99cc;
+}
