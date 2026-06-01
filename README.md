@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://www.genobiomics.com/wp-content/uploads/2019/04/banner.jpg" width="1000">
-</p>
-
 # Bioinformatics Class
 
 My classwork from [BIMM143 at UC San Diego Spring 2026](https://bioboot.github.io/bimm143_S26/)
